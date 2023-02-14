@@ -21,10 +21,12 @@ let handleTurn = function(choice,game,setGame){
   let tempWaldoFound = game.waldoFound;
   let tempOdlawFound = game.odlawFound;
   let tempWizardFound = game.wizardFound;
+  let target = document.querySelector('.target');
 
   found = true;
   
   if (found===true){
+    target.style.border='4px solid green';
     switch(choice){
       case 'waldo':
         tempWaldoFound=true;
@@ -47,6 +49,8 @@ let handleTurn = function(choice,game,setGame){
       odlawFound: tempOdlawFound,
       wizardFound: tempWizardFound,
     });
+  }else{
+    target.style.border='4px solid red';
   };
 }
 
