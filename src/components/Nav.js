@@ -6,7 +6,7 @@ import wizard from '../assets/wizardChar.png';
 export default function Nav({setGame}){
   return(
     <div className='nav'>
-      <div className='nav-title'>Find Waldo and Friends!</div>
+      <div className='nav-title'>Where's Waldo?</div>
       <button className='restart' onClick={()=>{newGame(setGame)}}>Restart Game!</button>
       <div className='img-container'>
         <div id='waldo' className='img-frame'>

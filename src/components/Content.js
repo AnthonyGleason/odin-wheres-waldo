@@ -3,14 +3,16 @@ import waldoGame from '../assets/waldo.jpg';
 
 export default function Content({game,setGame}){
   return(
-    <div className='frame' onClick={(e)=>{handleClick(e)}}>
-      <div className='target' />
-      <div className='button-container' >
-        <button onClick={()=>{handleTurn('waldo',game,setGame)}}>Waldo</button>
-        <button onClick={()=>{handleTurn('odlaw',game,setGame)}}>Odlaw</button>
-        <button onClick={()=>{handleTurn('wizard',game,setGame)}}>Wizard</button>
+    <div className='content'>
+      <div className='frame' onClick={(e)=>{handleClick(e)}}>
+        <div className='target' />
+        <div className='button-container' >
+          <button onClick={()=>{handleTurn('waldo',game,setGame)}}>Waldo</button>
+          <button onClick={()=>{handleTurn('odlaw',game,setGame)}}>Odlaw</button>
+          <button onClick={()=>{handleTurn('wizard',game,setGame)}}>Wizard</button>
+        </div>
+        <img src={waldoGame} className='content' alt='waldo game'/>
       </div>
-      <img src={waldoGame} className='content' alt='waldo game'/>
     </div>
   )
 };
