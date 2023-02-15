@@ -1,7 +1,8 @@
 import {React, useEffect} from 'react';
 import waldoGame from '../assets/waldo.jpg';
+import { collection, getDocs } from 'firebase/firestore/lite';
 
-export default function Content({game,setGame}){
+export default function Content({game,setGame,db}){
   useEffect(()=>{
     checkWin(game);
   },[game])
@@ -11,9 +12,9 @@ export default function Content({game,setGame}){
       <div className='frame' onClick={(e)=>{handleClick(e)}}>
         <div className='target' />
         <div className='button-container' >
-          <button className='waldo-button' onClick={(e)=>{handleTurn('waldo',game,setGame,e)}}>Waldo</button>
-          <button className='odlaw-button' onClick={(e)=>{handleTurn('odlaw',game,setGame,e)}}>Odlaw</button>
-          <button className='wizard-button' onClick={(e)=>{handleTurn('wizard',game,setGame,e)}}>Wizard</button>
+          <button className='waldo-button' onClick={(e)=>{handleTurn('waldo',game,setGame,e,db)}}>Waldo</button>
+          <button className='odlaw-button' onClick={(e)=>{handleTurn('odlaw',game,setGame,e,db)}}>Odlaw</button>
+          <button className='wizard-button' onClick={(e)=>{handleTurn('wizard',game,setGame,e,db)}}>Wizard</button>
         </div>
         <img src={waldoGame} className='content' alt='waldo game'/>
       </div>
@@ -22,13 +23,12 @@ export default function Content({game,setGame}){
 };
 
 //send a request to firebase to see if there is a character there
-let charAtCoords = function (selectedX,selectedY,choice){
-  let waldo = [992,384];
-  let odlaw = [713,422];
-  let wizard = [1105,463];
-
+let charAtCoords = async function (selectedX,selectedY,choice,db){
+  const snapshot = await getDocs(collection(db,"locations"));
+  let waldo = [snapshot.docs[0]._document.data.value.mapValue.fields.x,snapshot.docs[0]._document.data.value.mapValue.fields.y];
+  let odlaw = [snapshot.docs[1]._document.data.value.mapValue.fields.x,snapshot.docs[1]._document.data.value.mapValue.fields.y];
+  let wizard=[snapshot.docs[2]._document.data.value.mapValue.fields.x,snapshot.docs[2]._document.data.value.mapValue.fields.y];
   let difficulty = 150;
-  console.log(selectedX,selectedY);
   switch (choice){
     case 'waldo':
       if (Math.abs(waldo[0]-selectedX)<difficulty && Math.abs(waldo[1]-selectedY)<difficulty){
@@ -67,7 +67,7 @@ let checkWin = function (game){
   }
 }
 
-let handleTurn = function(choice,game,setGame,e){
+let handleTurn = function(choice,game,setGame,e,db){
   let tempGameOver = game.gameOver;
   let tempWaldoFound = game.waldoFound;
   let tempOdlawFound = game.odlawFound;
@@ -76,7 +76,7 @@ let handleTurn = function(choice,game,setGame,e){
   let selectedX=(e.pageX-100);
   let selectedY=(e.pageY);
   //find character at location and compare it to the chosen character
-  if (charAtCoords(selectedX,selectedY,choice)){
+  if (charAtCoords(selectedX,selectedY,choice,db)){
     target.style.border='4px solid green';
     switch(choice){
       case 'waldo':
