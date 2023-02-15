@@ -22,24 +22,34 @@ export default function Content({game,setGame}){
 };
 
 //send a request to firebase to see if there is a character there
-let charAtCoords = function (selectedX,selectedY){
+let charAtCoords = function (selectedX,selectedY,choice){
   let waldo = [992,384];
   let odlaw = [713,422];
   let wizard = [1105,463];
 
-  //remove px from end of selected coords and parseInt it
-  selectedX=parseInt(selectedX.slice(0,selectedX.length-2));
-  selectedY=parseInt(selectedY.slice(0,selectedY.length-2));
-
-  let waldoDiff = [Math.abs(selectedX-waldo[0]),Math.abs(selectedY-waldo[1])];
-  let odlawDiff = [Math.abs(selectedX-odlaw[0]),Math.abs(selectedY-odlaw[1])];
-  let wizardDiff = [Math.abs(selectedX-wizard[0]),Math.abs(selectedY-wizard[1])];
-  if (waldoDiff[0]>0 && waldoDiff[0]<50 && waldoDiff[1]>0 && waldoDiff[1]<50){
-    return 'waldo';
-  }else if (odlawDiff[0]>0 && odlawDiff[0]<50 && odlawDiff[1]>0 && odlawDiff[1]<50){
-    return 'odlaw';
-  }else if (wizardDiff[0]>0 && wizardDiff[0]<50 && wizardDiff[1]>0 && wizardDiff[1]<50){
-    return 'wizard';
+  let difficulty = 150;
+  console.log(selectedX,selectedY);
+  switch (choice){
+    case 'waldo':
+      if (Math.abs(waldo[0]-selectedX)<difficulty && Math.abs(waldo[1]-selectedY)<difficulty){
+        return true;
+      }else{
+        return false;
+      };
+    case 'odlaw':
+      if (Math.abs(odlaw[0]-selectedX)<difficulty && Math.abs(odlaw[1]-selectedY)<difficulty){
+        return true;
+      }else{
+        return false;
+      };
+    case 'wizard':
+      if (Math.abs(wizard[0]-selectedX)<difficulty && Math.abs(wizard[1]-selectedY)<difficulty){
+        return true;
+      }else{
+        return false;
+      };
+    default:
+      return false;
   }
 };
 
@@ -58,18 +68,15 @@ let checkWin = function (game){
 }
 
 let handleTurn = function(choice,game,setGame,e){
-  let found=false;
   let tempGameOver = game.gameOver;
   let tempWaldoFound = game.waldoFound;
   let tempOdlawFound = game.odlawFound;
   let tempWizardFound = game.wizardFound;
   let target = document.querySelector('.target');
-  let selectedX=(e.pageX-25)+'px';
-  let selectedY=(e.pageY-25)+'px';
+  let selectedX=(e.pageX-100);
+  let selectedY=(e.pageY);
   //find character at location and compare it to the chosen character
-  if (choice===charAtCoords(selectedX,selectedY)) found=true;
-  
-  if (found===true){
+  if (charAtCoords(selectedX,selectedY,choice)){
     target.style.border='4px solid green';
     switch(choice){
       case 'waldo':

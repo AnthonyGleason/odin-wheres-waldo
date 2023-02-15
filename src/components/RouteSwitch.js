@@ -28,3 +28,7 @@ export default function RouteSwitch(){
     </div>
   )
 };
+
+
+//Need timer
+//Need firebase support for coordinates, use await async when retrieving 
