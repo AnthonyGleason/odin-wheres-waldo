@@ -25,10 +25,11 @@ export default function Content({game,setGame,db}){
 //send a request to firebase to see if there is a character there
 let charAtCoords = async function (selectedX,selectedY,choice,db){
   const snapshot = await getDocs(collection(db,"locations"));
-  let waldo = [snapshot.docs[0]._document.data.value.mapValue.fields.x,snapshot.docs[0]._document.data.value.mapValue.fields.y];
-  let odlaw = [snapshot.docs[1]._document.data.value.mapValue.fields.x,snapshot.docs[1]._document.data.value.mapValue.fields.y];
-  let wizard=[snapshot.docs[2]._document.data.value.mapValue.fields.x,snapshot.docs[2]._document.data.value.mapValue.fields.y];
+  let waldo = [parseInt(snapshot.docs[1]._document.data.value.mapValue.fields.x.integerValue),parseInt(snapshot.docs[1]._document.data.value.mapValue.fields.y.integerValue)];
+  let odlaw = [parseInt(snapshot.docs[0]._document.data.value.mapValue.fields.x.integerValue),parseInt(snapshot.docs[0]._document.data.value.mapValue.fields.y.integerValue)];
+  let wizard=[parseInt(snapshot.docs[2]._document.data.value.mapValue.fields.x.integerValue),parseInt(snapshot.docs[2]._document.data.value.mapValue.fields.y.integerValue)];
   let difficulty = 150;
+  console.log(Math.abs(odlaw[0]-selectedX),Math.abs(odlaw[1]-selectedY));
   switch (choice){
     case 'waldo':
       if (Math.abs(waldo[0]-selectedX)<difficulty && Math.abs(waldo[1]-selectedY)<difficulty){
@@ -67,7 +68,7 @@ let checkWin = function (game){
   }
 }
 
-let handleTurn = function(choice,game,setGame,e,db){
+let handleTurn = async function(choice,game,setGame,e,db){
   let tempGameOver = game.gameOver;
   let tempWaldoFound = game.waldoFound;
   let tempOdlawFound = game.odlawFound;
@@ -75,8 +76,10 @@ let handleTurn = function(choice,game,setGame,e,db){
   let target = document.querySelector('.target');
   let selectedX=(e.pageX-100);
   let selectedY=(e.pageY);
+  let charBool = await charAtCoords(selectedX,selectedY,choice,db);
+  console.log(charBool);
   //find character at location and compare it to the chosen character
-  if (charAtCoords(selectedX,selectedY,choice,db)){
+  if (charBool){
     target.style.border='4px solid green';
     switch(choice){
       case 'waldo':
@@ -102,6 +105,7 @@ let handleTurn = function(choice,game,setGame,e,db){
       waldoFound: tempWaldoFound,
       odlawFound: tempOdlawFound,
       wizardFound: tempWizardFound,
+      fastestTime: game.fastestTime,
     });
   }else{
     target.style.border='4px solid red';

@@ -17,6 +17,7 @@ export default function RouteSwitch(){
     waldoFound: false,
     odlawFound: false,
     wizardFound: false,
+    fastestTime: null,
   });
 
   //using firebase config from project
@@ -35,7 +36,7 @@ const db = getFirestore(app);
 
   return(
     <div className='body'>
-      <Nav setGame={setGame.bind(this)} />
+      <Nav game={game} setGame={setGame.bind(this)} />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Content game={game} setGame={setGame.bind(this)} db={db} />} />
@@ -44,7 +45,3 @@ const db = getFirestore(app);
     </div>
   )
 };
-
-
-//Need timer
-//Need firebase support for coordinates, use await async when retrieving 
