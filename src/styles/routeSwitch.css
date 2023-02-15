@@ -23,6 +23,7 @@
 }
 .frame{
   display: flex;
+  margin-bottom: 100px;
   width: max-content;
   height: max-content;
   align-self: center;
@@ -53,8 +54,8 @@
   color: rgb(0, 0, 0);
 }
 .img-frame{
-  height: 150px;
-  width: 75px;
+  height: 200px;
+  width: 100px;
   border: 10px solid red;
   border-radius: 10px;
   box-shadow: -7px 7px 5px 0px rgba(0,0,0,0.4);
@@ -72,8 +73,7 @@
   justify-content: space-around;
   align-items: center;
 }
-.restart,
-.nav-button-container button{
+.restart{
   background-color: rgba(255, 255, 255, 0.85);
   font-size: medium;
   font-weight: 500;
@@ -84,12 +84,4 @@
   align-items: center;
   height: 100%;
   width: 100%;
-}
-.nav-button-container{
-  display: flex;
-  justify-content: space-around;
-}
-.nav-button-container div{
-  margin-left: 10px;
-  margin-right: 10px;
 }
