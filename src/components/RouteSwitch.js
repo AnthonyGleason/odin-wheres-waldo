@@ -15,11 +15,12 @@ export default function RouteSwitch(){
     waldoFound: false,
     odlawFound: false,
     wizardFound: false,
+    level: 1,
   });
 
   return(
     <div className='body'>
-      <Nav setGame={setGame.bind(this)} />
+      <Nav game={game} setGame={setGame.bind(this)} />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Content game={game} setGame={setGame.bind(this)} />} />

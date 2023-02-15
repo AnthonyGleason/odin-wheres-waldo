@@ -1,5 +1,7 @@
 import {React} from 'react';
-import waldoGame from '../assets/waldo.jpg';
+import levelOne from '../assets/waldo.jpg';
+import levelTwo from '../assets/waldo2.jpg';
+import levelThree from '../assets/waldo3.jpg';
 
 export default function Content({game,setGame}){
   return(
@@ -11,10 +13,23 @@ export default function Content({game,setGame}){
           <button onClick={()=>{handleTurn('odlaw',game,setGame)}}>Odlaw</button>
           <button onClick={()=>{handleTurn('wizard',game,setGame)}}>Wizard</button>
         </div>
-        <img src={waldoGame} className='content' alt='waldo game'/>
+        <img src={setPicture(game)} className='content' alt='waldo game'/>
       </div>
     </div>
   )
+};
+
+let setPicture = function(game){
+  switch(game.level){
+    case 1:
+      return levelOne;
+    case 2:
+      return levelTwo;
+    case 3:
+      return levelThree;
+    default:
+      return levelOne;
+  }
 };
 
 let handleTurn = function(choice,game,setGame){
@@ -50,6 +65,7 @@ let handleTurn = function(choice,game,setGame){
       waldoFound: tempWaldoFound,
       odlawFound: tempOdlawFound,
       wizardFound: tempWizardFound,
+      level: game.level,
     });
   }else{
     target.style.border='4px solid red';
