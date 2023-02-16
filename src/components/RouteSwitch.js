@@ -17,26 +17,25 @@ export default function RouteSwitch(){
     waldoFound: false,
     odlawFound: false,
     wizardFound: false,
-    fastestTime: null,
   });
 
   //using firebase config from project
-const firebaseConfig = {
-  apiKey: "AIzaSyAVD-gDD17IbiS94t1FCypXkzhPLTosRe8",
-  authDomain: "react-waldo.firebaseapp.com",
-  projectId: "react-waldo",
-  storageBucket: "react-waldo.appspot.com",
-  messagingSenderId: "598090854624",
-  appId: "1:598090854624:web:2a40ecb451ff29b654a085"
-};
-//initalize the firebase app with the config
-const app = initializeApp(firebaseConfig);
-//get the current database
-const db = getFirestore(app);
+  const firebaseConfig = {
+    apiKey: "AIzaSyAVD-gDD17IbiS94t1FCypXkzhPLTosRe8",
+    authDomain: "react-waldo.firebaseapp.com",
+    projectId: "react-waldo",
+    storageBucket: "react-waldo.appspot.com",
+    messagingSenderId: "598090854624",
+    appId: "1:598090854624:web:2a40ecb451ff29b654a085"
+  };
+  //initalize the firebase app with the config
+  const app = initializeApp(firebaseConfig);
+  //get the current database
+  const db = getFirestore(app);
 
   return(
     <div className='body'>
-      <Nav game={game} setGame={setGame.bind(this)} />
+      <Nav setGame={setGame.bind(this)} />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Content game={game} setGame={setGame.bind(this)} db={db} />} />

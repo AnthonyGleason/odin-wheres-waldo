@@ -3,11 +3,11 @@ import waldo from '../assets/waldoChar.png';
 import odlaw from '../assets/odlawChar.png';
 import wizard from '../assets/wizardChar.png';
 
-export default function Nav({game,setGame}){
+export default function Nav({setGame}){
   return(
     <div className='nav'>
       <div className='nav-title'>Where's Waldo?</div>
-      <button className='restart' onClick={()=>{newGame(game,setGame)}}>Restart Game!</button>
+      <button className='restart' onClick={()=>{newGame(setGame)}}>Restart Game!</button>
       <div className='img-container'>
         <div id='waldo' className='img-frame'>
           <img src={waldo} alt='waldo' />
@@ -26,13 +26,12 @@ export default function Nav({game,setGame}){
   )
 }
 
-let newGame = function(game,setGame){
+let newGame = function(setGame){
   setGame({
     gameOver: false,
     waldoFound: false,
     odlawFound: false,
     wizardFound: false,
-    fastestTime: game.fastestTime,
   })
   document.querySelector('#waldo').style.border='10px solid red';
   document.querySelector('#odlaw').style.border='10px solid red';

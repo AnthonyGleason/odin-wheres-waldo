@@ -29,7 +29,6 @@ let charAtCoords = async function (selectedX,selectedY,choice,db){
   let odlaw = [parseInt(snapshot.docs[0]._document.data.value.mapValue.fields.x.integerValue),parseInt(snapshot.docs[0]._document.data.value.mapValue.fields.y.integerValue)];
   let wizard=[parseInt(snapshot.docs[2]._document.data.value.mapValue.fields.x.integerValue),parseInt(snapshot.docs[2]._document.data.value.mapValue.fields.y.integerValue)];
   let difficulty = 150;
-  console.log(Math.abs(odlaw[0]-selectedX),Math.abs(odlaw[1]-selectedY));
   switch (choice){
     case 'waldo':
       if (Math.abs(waldo[0]-selectedX)<difficulty && Math.abs(waldo[1]-selectedY)<difficulty){
@@ -56,7 +55,6 @@ let charAtCoords = async function (selectedX,selectedY,choice,db){
 
 let checkWin = function (game){
   if (game.waldoFound===true && game.odlawFound===true && game.wizardFound===true){
-    console.log('win!');
     //color portraits
     document.querySelector('.target').style.border='7px solid palegreen';
     document.querySelector('.waldo-button').style.backgroundColor='palegreen';
@@ -77,7 +75,6 @@ let handleTurn = async function(choice,game,setGame,e,db){
   let selectedX=(e.pageX-100);
   let selectedY=(e.pageY);
   let charBool = await charAtCoords(selectedX,selectedY,choice,db);
-  console.log(charBool);
   //find character at location and compare it to the chosen character
   if (charBool){
     target.style.border='4px solid green';
@@ -105,7 +102,6 @@ let handleTurn = async function(choice,game,setGame,e,db){
       waldoFound: tempWaldoFound,
       odlawFound: tempOdlawFound,
       wizardFound: tempWizardFound,
-      fastestTime: game.fastestTime,
     });
   }else{
     target.style.border='4px solid red';
